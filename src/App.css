@@ -1,16 +1,62 @@
-.App {
-  font-family: Arial, sans-serif;
+/* Reset default margin and padding for the whole page */
+body, html {
   margin: 0;
   padding: 0;
 }
 
+/* Apply the background image to the entire app */
+.App {
+  background-image: url('./MandirLDN.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* Ensure the background covers the whole viewport */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles for the header */
 .header {
-  background-color: #333;
-  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 1rem;
+  color: white;
   text-align: center;
 }
 
+/* Styles for the main content */
 .main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 2rem;
+}
+
+/* Styles for the car park boxes */
+.car-park-boxes {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Styles for the car park card */
+.car-park-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the card header */
+.card-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Styles for the available spaces */
+.available-spaces {
+  color: green;
+  font-size: 1rem;
 }
