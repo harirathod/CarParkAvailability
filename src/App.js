@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import backgroundImage from './MandirLDN.jpeg';
@@ -33,41 +33,45 @@ const CarParkBox = ({ carPark }) => {
 };
 
 const App = () => {
-  const [showCarPark1Spaces, setShowCarPark1Spaces] = useState(true);
-  const [showCarPark2Spaces, setShowCarPark2Spaces] = useState(true);
-  const [showCarPark3Spaces, setShowCarPark3Spaces] = useState(true);
+  const [showCarPark1Spaces, setShowCarPark1Spaces] = useState(0);
+  const [showCarPark2Spaces, setShowCarPark2Spaces] = useState(0);
+  const [showCarPark3Spaces, setShowCarPark3Spaces] = useState(0);
 
-  const toggleCarPark1Spaces = () => {
-    setShowCarPark1Spaces(!showCarPark1Spaces);
-    setShowCarPark2Spaces(true);
-    setShowCarPark3Spaces(true);
-  };
+  useEffect(() => {
+    // Simple GET request using fetch
+    fetch('http://localhost:8080/getAvailableSpace/School')
+        .then(response => response.json())
+        .then(data => {
+          return setShowCarPark2Spaces(() => data)
+        });
 
-  const toggleCarPark2Spaces = () => {
-    setShowCarPark2Spaces(!showCarPark2Spaces);
-    setShowCarPark1Spaces(true);
-    setShowCarPark3Spaces(true);
-  };
+    fetch('http://localhost:8080/getAvailableSpace/Tennis%20Court')
+      .then(response => response.json())
+      .then(data => {
+        return setShowCarPark3Spaces(() => data)
+      });
 
-  const toggleCarPark3Spaces = () => {
-    setShowCarPark3Spaces(!showCarPark3Spaces);
-    setShowCarPark1Spaces(true);
-    setShowCarPark2Spaces(true);
-  };
+    fetch('http://localhost:8080/getAvailableSpace/Shayona')
+      .then(response => response.json())
+      .then(data => {
+        return setShowCarPark1Spaces(() => data)
+      });
+      
+    }, [])
 
-  const carPark1Spaces = Array.from({ length: 150 }, (_, index) => ({
+  const carPark1Spaces = Array.from({ length: showCarPark1Spaces }, (_, index) => ({
     id: index + 1,
     name: `Car Park Shayona - Space ${String.fromCharCode(65 + index)}`,
     available: true,
   }));
 
-  const carPark2Spaces = Array.from({ length: 300 }, (_, index) => ({
+  const carPark2Spaces = Array.from({ length: showCarPark2Spaces }, (_, index) => ({
     id: index + 1,
     name: `Car Park Swaminarayan School - Space ${String.fromCharCode(65 + index)}`,
     available: true,
   }));
 
-  const carPark3Spaces = Array.from({ length: 200 }, (_, index) => ({
+  const carPark3Spaces = Array.from({ length: showCarPark3Spaces }, (_, index) => ({
     id: index + 1,
     name: `Car Park Tennis Court - Space ${String.fromCharCode(65 + index)}`,
     available: true,
