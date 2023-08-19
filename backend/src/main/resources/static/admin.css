@@ -30,12 +30,22 @@ body {
   cursor: pointer;
 }
 
-.left-side {
+
+
+.left-side button {
   background-color: rgb(173, 241, 173);
 }
 
-.right-side {
+.right-side button {
   background-color: rgb(250, 217, 151);
+}
+
+.left-side button:active {
+  background-color: rgb(106, 167, 106);
+}
+
+.right-side button:active {
+  background-color: rgb(145, 123, 80);
 }
 
 select {

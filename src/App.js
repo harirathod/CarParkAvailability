@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-
 import backgroundImage from './MandirLDN.jpeg';
 
 const CarPark = ({ name, spaces, showSpaces }) => {
@@ -33,74 +32,43 @@ const CarParkBox = ({ carPark }) => {
 };
 
 const App = () => {
-  const [showCarPark1Spaces, setShowCarPark1Spaces] = useState(0);
-  const [showCarPark2Spaces, setShowCarPark2Spaces] = useState(0);
-  const [showCarPark3Spaces, setShowCarPark3Spaces] = useState(0);
+  const [carParkData, setCarParkData] = useState([]);
 
   useEffect(() => {
-    // Simple GET request using fetch
-    fetch('http://localhost:8080/getAvailableSpace/School')
-        .then(response => response.json())
-        .then(data => {
-          return setShowCarPark2Spaces(() => data)
-        });
-
-    fetch('http://localhost:8080/getAvailableSpace/Tennis%20Court')
-      .then(response => response.json())
+    const fetchData = () => {
+      Promise.all([
+        fetch('http://localhost:8080/getAvailableSpace/Shayona').then(response => response.json()),
+        fetch('http://localhost:8080/getAvailableSpace/School').then(response => response.json()),
+        fetch('http://localhost:8080/getAvailableSpace/Tennis%20Court').then(response => response.json())
+      ])
       .then(data => {
-        return setShowCarPark3Spaces(() => data)
+        setCarParkData(data);
       });
+    };
 
-    fetch('http://localhost:8080/getAvailableSpace/Shayona')
-      .then(response => response.json())
-      .then(data => {
-        return setShowCarPark1Spaces(() => data)
-      });
-      
-    }, [])
+    fetchData();
 
-  const carPark1Spaces = Array.from({ length: showCarPark1Spaces }, (_, index) => ({
-    id: index + 1,
-    name: `Car Park Shayona - Space ${String.fromCharCode(65 + index)}`,
-    available: true,
+    const intervalId = setInterval(fetchData, 3000); // Fetch data every 3 seconds
+
+    return () => clearInterval(intervalId); // Clear interval on component unmount
+  }, []);
+
+  const carParks = carParkData.map((data, index) => ({
+    name: index === 0 ? 'Shayona' : index === 1 ? 'Swaminarayan School' : 'Tennis Court',
+    spaces: Array.from({ length: data }, (_, i) => ({
+      id: i + 1,
+      name: `Car Park ${index === 0 ? 'Shayona' : index === 1 ? 'Swaminarayan School' : 'Tennis Court'} - Space ${String.fromCharCode(65 + i)}`,
+      available: true,
+    })),
+    showSpaces: data,
   }));
-
-  const carPark2Spaces = Array.from({ length: showCarPark2Spaces }, (_, index) => ({
-    id: index + 1,
-    name: `Car Park Swaminarayan School - Space ${String.fromCharCode(65 + index)}`,
-    available: true,
-  }));
-
-  const carPark3Spaces = Array.from({ length: showCarPark3Spaces }, (_, index) => ({
-    id: index + 1,
-    name: `Car Park Tennis Court - Space ${String.fromCharCode(65 + index)}`,
-    available: true,
-  }));
-
-  const carParks = [
-    {
-      name: 'Shayona',
-      spaces: carPark1Spaces,
-      showSpaces: showCarPark1Spaces,
-    },
-    {
-      name: 'Swaminarayan School',
-      spaces: carPark2Spaces,
-      showSpaces: showCarPark2Spaces,
-    },
-    {
-      name: 'Tennis Court',
-      spaces: carPark3Spaces,
-      showSpaces: showCarPark3Spaces,
-    },
-  ];
 
   const appStyle = {
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
-    height: '100vh', // Fill the whole screen vertically
+    height: '100vh',
   };
 
   return (
