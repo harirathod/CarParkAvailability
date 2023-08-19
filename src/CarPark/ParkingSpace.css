@@ -1,0 +1,17 @@
+.parking-space {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .available {
+    background-color: #c8e6c9;
+  }
+  
+  .occupied {
+    background-color: #ffcdd2;
+  }
+  
