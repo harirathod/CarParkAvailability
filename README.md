@@ -2,7 +2,7 @@
 
 ### Overview
 - A web application that displays live updates on the remaining parking spaces for the car parks surrounding Neasden Temple.
-- There are two portals: a public portal to watch the live updates, and a manager portal to control the count.
+- There are two pages: a public page to watch the live updates, and a manager page to control the count.
 - Uses **Java Spring Boot** for the back end, and **React** for the front end.
 
 ### Purpose
@@ -10,5 +10,7 @@
 - Developed as part of the hackathon at BAPS Shri Swaminarayan Mandir, London (Neasden Temple), on 19 August 2023. Awarded 2nd place.
 
 
-#### _Below are both portals, side by side._
+#### _Below are both pages, side by side._
+- _The left, the visitor page, displays the live count._
+- _The right, the manager page, manipulates the count by providing two buttons._
 <img width="1080" alt="Screenshot 2023-10-06 at 13 30 24" src="https://github.com/harirathod/CarParkTracker/assets/86746016/eb2953b4-dc73-4772-ab81-33e3ed91dd3b">
